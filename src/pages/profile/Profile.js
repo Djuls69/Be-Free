@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { Card, Row, Col, Image, Form, Button } from 'react-bootstrap'
 import { setAvailableUser } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
+import UserGeneralModal from '../../components/modals/UserGeneralModal'
 
 const Profile = ({ history, usersReducer: { user }, setAvailableUser }) => {
   const [isAvailable, setIsAvailable] = useState(user.available)
+  const [show, setShow] = useState(false)
 
   if (!user) {
     history.push('/login')
@@ -66,7 +68,9 @@ const Profile = ({ history, usersReducer: { user }, setAvailableUser }) => {
                 <p>Compétences: {user.skills || 'A définir'}</p>
                 <p>Site Web: {user.site || 'A définir'}</p>
                 <p>Bio: {user.bio || 'A définir'}</p>
-                <Button variant='outline-primary'>Modifier</Button>
+                <Button onClick={() => setShow(true)} variant='outline-primary'>
+                  Modifier
+                </Button>
               </div>
 
               <div className='mb-4'>
@@ -80,6 +84,8 @@ const Profile = ({ history, usersReducer: { user }, setAvailableUser }) => {
           </Row>
         </Card.Body>
       </Card>
+
+      {show && <UserGeneralModal show={show} setShow={setShow} />}
     </section>
   )
 }
