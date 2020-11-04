@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Header from './components/header/Header'
 import { Container } from 'react-bootstrap'
+import Header from './components/header/Header'
 import Register from './pages/register/Register'
+import { loadUser } from './redux/actions/usersActions'
+import { connect } from 'react-redux'
 
-const App = () => {
+const App = ({ loadUser }) => {
+  useEffect(() => {
+    loadUser()
+  }, [loadUser])
+
   return (
     <Router>
       <Header />
@@ -21,4 +27,8 @@ const App = () => {
   )
 }
 
-export default App
+const mapState = state => ({
+  user: state.usersReducer.user
+})
+
+export default connect(mapState, { loadUser })(App)

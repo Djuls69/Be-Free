@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import { useFormik } from 'formik'
+import { registerUser } from '../../redux/actions/usersActions'
+import { connect } from 'react-redux'
 
 const validate = values => {
   const errors = {}
@@ -18,8 +20,6 @@ const validate = values => {
   }
   if (!values.password) {
     errors.password = 'Mot de passe requis'
-  } else if (values.password.length < 6) {
-    errors.password = 'Au minimum 6 caractères'
   }
   if (!values.confirmPassword) {
     errors.confirmPassword = 'Confirmation du mot de passe requis'
@@ -30,7 +30,7 @@ const validate = values => {
   return errors
 }
 
-const DevFormRegister = () => {
+const DevFormRegister = ({ registerUser }) => {
   const formik = useFormik({
     initialValues: {
       status: 'dev',
@@ -42,7 +42,7 @@ const DevFormRegister = () => {
     },
     validate,
     onSubmit: values => {
-      console.log(values)
+      registerUser(values)
     }
   })
   const {
@@ -153,4 +153,4 @@ const DevFormRegister = () => {
   )
 }
 
-export default DevFormRegister
+export default connect(null, { registerUser })(DevFormRegister)
