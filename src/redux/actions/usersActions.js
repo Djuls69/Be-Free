@@ -32,7 +32,8 @@ export const registerUser = (values, history) => async dispatch => {
       companyName: companyName ? companyName : null,
       firstName,
       lastName,
-      email
+      email,
+      available: false
     }
 
     await db.collection('users').doc(user.uid).set(newUser)
@@ -55,6 +56,21 @@ export const loginUser = (values, history) => async dispatch => {
 
     dispatch(loadUser())
     history.push('/')
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
+export const setAvailableUser = bool => async (dispatch, getState) => {
+  const {
+    usersReducer: { user }
+  } = getState()
+
+  try {
+    await db.collection('users').doc(user.id).update({
+      available: bool
+    })
+    dispatch(loadUser())
   } catch (err) {
     console.log(err.message)
   }
