@@ -3,7 +3,7 @@ import { Form, Card } from 'react-bootstrap'
 import CompanyFormRegister from '../../components/companyFormRegister/CompanyFormRegister'
 import DevFormRegister from '../../components/devFormRegister/DevFormRegister'
 
-const Register = () => {
+const Register = ({ history }) => {
   const [dev, setDev] = useState(true)
   const [company, setCompany] = useState(false)
 
@@ -39,7 +39,11 @@ const Register = () => {
           />
         </div>
 
-        {dev ? <DevFormRegister /> : <CompanyFormRegister />}
+        {dev ? (
+          <DevFormRegister history={history} />
+        ) : (
+          <CompanyFormRegister history={history} />
+        )}
       </Card.Body>
     </Card>
   )

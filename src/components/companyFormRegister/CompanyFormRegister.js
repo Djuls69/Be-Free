@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import { useFormik } from 'formik'
+import { registerUser } from '../../redux/actions/usersActions'
+import { connect } from 'react-redux'
 
 const validate = values => {
   const errors = {}
@@ -33,7 +35,7 @@ const validate = values => {
   return errors
 }
 
-const CompanyFormRegister = () => {
+const CompanyFormRegister = ({ registerUser, history }) => {
   const formik = useFormik({
     initialValues: {
       status: 'company',
@@ -46,7 +48,7 @@ const CompanyFormRegister = () => {
     },
     validate,
     onSubmit: values => {
-      console.log(values)
+      registerUser(values, history)
     }
   })
   const {
@@ -168,4 +170,4 @@ const CompanyFormRegister = () => {
   )
 }
 
-export default CompanyFormRegister
+export default connect(null, { registerUser })(CompanyFormRegister)

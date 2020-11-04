@@ -30,7 +30,7 @@ const validate = values => {
   return errors
 }
 
-const DevFormRegister = ({ registerUser }) => {
+const DevFormRegister = ({ registerUser, history }) => {
   const formik = useFormik({
     initialValues: {
       status: 'dev',
@@ -42,7 +42,7 @@ const DevFormRegister = ({ registerUser }) => {
     },
     validate,
     onSubmit: values => {
-      registerUser(values)
+      registerUser(values, history)
     }
   })
   const {

@@ -6,6 +6,8 @@ import Header from './components/header/Header'
 import Register from './pages/register/Register'
 import { loadUser } from './redux/actions/usersActions'
 import { connect } from 'react-redux'
+import Login from './pages/login/Login'
+import Profile from './pages/profile/Profile'
 
 const App = ({ loadUser }) => {
   useEffect(() => {
@@ -20,6 +22,8 @@ const App = ({ loadUser }) => {
           <Switch>
             <Route exact path='/' component={() => <h1>Home</h1>} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/profile' component={Profile} />
           </Switch>
         </Container>
       </main>

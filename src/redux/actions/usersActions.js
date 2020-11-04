@@ -21,7 +21,7 @@ export const loadUser = () => dispatch => {
   }
 }
 
-export const registerUser = values => async dispatch => {
+export const registerUser = (values, history) => async dispatch => {
   const { status, companyName, firstName, lastName, email, password } = values
 
   try {
@@ -41,9 +41,32 @@ export const registerUser = values => async dispatch => {
       type: LOGIN_USER,
       payload: newUser
     })
+    history.push('/')
   } catch (err) {
     console.log(err.message)
   }
 }
 
-export const logoutUser = () => {}
+export const loginUser = (values, history) => async dispatch => {
+  const { email, password } = values
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password)
+
+    dispatch(loadUser())
+    history.push('/')
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
+export const logoutUser = history => async dispatch => {
+  try {
+    await auth.signOut()
+    dispatch({ type: CLEAR_USER })
+    localStorage.removeItem('persist:befree')
+    history.push('/login')
+  } catch (err) {
+    console.log(err.message)
+  }
+}
