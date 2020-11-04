@@ -63,11 +63,28 @@ const Profile = ({ history, usersReducer: { user }, setAvailableUser }) => {
             <Col xs={12} md={8}>
               <div style={{ marginBottom: 50 }}>
                 <h4 className='mb-4'>Général:</h4>
-                <p>Intitulé: {user.job || 'A définir'}</p>
-                <p>Ville: {user.city || 'A définir'}</p>
-                <p>Compétences: {user.skills || 'A définir'}</p>
-                <p>Site Web: {user.site || 'A définir'}</p>
-                <p>Bio: {user.bio || 'A définir'}</p>
+                <p>
+                  <span className='bold'>Intitulé:</span>{' '}
+                  {user.title || 'A définir'}
+                </p>
+                <p>
+                  <span className='bold'>Ville:</span>{' '}
+                  {user.city || 'A définir'}
+                </p>
+                <p>
+                  <span className='bold'>Compétences:</span>{' '}
+                  {user.skills || 'A définir'}
+                </p>
+                {user.web && (
+                  <p>
+                    <span className='bold'>Site Web:</span> {user.web}
+                  </p>
+                )}
+                {user.bio && (
+                  <p>
+                    <span className='bold'>Bio:</span> {user.bio}
+                  </p>
+                )}
                 <Button onClick={() => setShow(true)} variant='outline-primary'>
                   Modifier
                 </Button>

@@ -76,6 +76,35 @@ export const setAvailableUser = bool => async (dispatch, getState) => {
   }
 }
 
+export const updateGeneralSection = values => async (dispatch, getState) => {
+  const { title, city, skills, web, bio } = values
+  const {
+    usersReducer: { user }
+  } = getState()
+
+  try {
+    const userProfile = await db.collection('users').doc(user.id).get()
+    if (userProfile.exists) {
+      await db
+        .collection('users')
+        .doc(user.id)
+        .update({
+          title: title || userProfile.data().title || '',
+          city: city || userProfile.data().city || '',
+          skills: skills || userProfile.data().skills || '',
+          web: web || userProfile.data().web || '',
+          bio: bio || userProfile.data().bio || ''
+        })
+      dispatch(loadUser())
+    } else {
+      // TODO: alert
+      console.log('Profile introuvable')
+    }
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
 export const logoutUser = history => async dispatch => {
   try {
     await auth.signOut()

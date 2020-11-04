@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
+import { updateGeneralSection } from '../../redux/actions/usersActions'
+import { connect } from 'react-redux'
 
-const UserGeneralModal = ({ show, setShow }) => {
+const UserGeneralModal = ({ show, setShow, updateGeneralSection }) => {
   const [title, setTitle] = useState('')
   const [city, setCity] = useState('')
-  const [skills, setSkills] = useState([])
+  const [skills, setSkills] = useState('')
   const [web, setWeb] = useState('')
   const [bio, setBio] = useState('')
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    updateGeneralSection({ title, city, skills, web, bio })
+    setShow(false)
+  }
 
   return (
     <Modal show={show} onHide={() => setShow(false)}>
@@ -14,8 +22,8 @@ const UserGeneralModal = ({ show, setShow }) => {
         <Modal.Title>General:</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
-        <Form>
+      <Form noValidate onSubmit={handleSubmit}>
+        <Modal.Body>
           <Form.Group>
             <Form.Label>Intitulé:</Form.Label>
             <Form.Control
@@ -65,19 +73,23 @@ const UserGeneralModal = ({ show, setShow }) => {
               onChange={e => setBio(e.target.value)}
             />
           </Form.Group>
-        </Form>
-      </Modal.Body>
+        </Modal.Body>
 
-      <Modal.Footer>
-        <Button variant='secondary' onClick={() => setShow(false)}>
-          Fermer
-        </Button>
-        <Button variant='primary' onClick={() => setShow(false)}>
-          Sauvegarder
-        </Button>
-      </Modal.Footer>
+        <Modal.Footer>
+          <Button
+            variant='secondary'
+            type='button'
+            onClick={() => setShow(false)}
+          >
+            Fermer
+          </Button>
+          <Button variant='primary' type='submit'>
+            Sauvegarder
+          </Button>
+        </Modal.Footer>
+      </Form>
     </Modal>
   )
 }
 
-export default UserGeneralModal
+export default connect(null, { updateGeneralSection })(UserGeneralModal)

@@ -9,9 +9,7 @@ import 'bootswatch/dist/lux/bootstrap.min.css'
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </PersistGate>
   </Provider>,
   document.getElementById('root')
