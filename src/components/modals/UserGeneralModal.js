@@ -7,7 +7,9 @@ const UserGeneralModal = ({ show, setShow, updateGeneralSection, user }) => {
   const [title, setTitle] = useState(user.title || '')
   const [avatar, setAvatar] = useState(user.avatar || '')
   const [city, setCity] = useState(user.city || '')
-  const [skills, setSkills] = useState(user.skills.join(', ') || '')
+  const [skills, setSkills] = useState(
+    user.skills ? user.skills.join(', ') : []
+  )
   const [web, setWeb] = useState(user.web || '')
   const [bio, setBio] = useState(user.bio || '')
 
