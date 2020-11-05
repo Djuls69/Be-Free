@@ -63,7 +63,7 @@ const Profile = ({ match, usersReducer, setAvailableUser }) => {
                   style={{ width: 200, height: 200, objectFit: 'cover' }}
                   src={
                     loadedUser.avatar ||
-                    'https://i2-prod.mirror.co.uk/incoming/article6463265.ece/ALTERNATES/s615/Doctor-Who.jpg'
+                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
                   }
                 />
                 <p>
@@ -149,7 +149,9 @@ const Profile = ({ match, usersReducer, setAvailableUser }) => {
             </Row>
           </Card.Body>
         </Card>
-        {show && <UserGeneralModal show={show} setShow={setShow} />}
+        {show && (
+          <UserGeneralModal show={show} setShow={setShow} user={loadedUser} />
+        )}
       </Fragment>
     </section>
   )

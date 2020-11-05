@@ -87,7 +87,7 @@ export const setAvailableUser = bool => async (dispatch, getState) => {
 }
 
 export const updateGeneralSection = values => async (dispatch, getState) => {
-  const { title, city, skills, web, bio } = values
+  const { title, city, skills, web, bio, avatar } = values
   const {
     usersReducer: { user }
   } = getState()
@@ -98,13 +98,7 @@ export const updateGeneralSection = values => async (dispatch, getState) => {
       await db
         .collection('users')
         .doc(user.id)
-        .update({
-          title: title || userProfile.data().title || '',
-          city: city || userProfile.data().city || '',
-          skills: skills || userProfile.data().skills || '',
-          web: web || userProfile.data().web || '',
-          bio: bio || userProfile.data().bio || ''
-        })
+        .update({ title, city, skills, web, bio, avatar })
       dispatch(loadUser())
     } else {
       // TODO: alert

@@ -3,18 +3,19 @@ import { Button, Form, Modal } from 'react-bootstrap'
 import { updateGeneralSection } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
 
-const UserGeneralModal = ({ show, setShow, updateGeneralSection }) => {
-  const [title, setTitle] = useState('')
-  const [city, setCity] = useState('')
-  const [skills, setSkills] = useState('')
-  const [web, setWeb] = useState('')
-  const [bio, setBio] = useState('')
+const UserGeneralModal = ({ show, setShow, updateGeneralSection, user }) => {
+  const [title, setTitle] = useState(user.title || '')
+  const [avatar, setAvatar] = useState(user.avatar || '')
+  const [city, setCity] = useState(user.city || '')
+  const [skills, setSkills] = useState(user.skills || '')
+  const [web, setWeb] = useState(user.web || '')
+  const [bio, setBio] = useState(user.bio || '')
 
   useEffect(() => {})
 
   const handleSubmit = e => {
     e.preventDefault()
-    updateGeneralSection({ title, city, skills, web, bio })
+    updateGeneralSection({ title, city, skills, web, bio, avatar })
     setShow(false)
   }
 
@@ -33,6 +34,17 @@ const UserGeneralModal = ({ show, setShow, updateGeneralSection }) => {
               name='title'
               value={title}
               onChange={e => setTitle(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Avatar:</Form.Label>
+            <Form.Control
+              type='text'
+              name='avatar'
+              value={avatar}
+              onChange={e => setAvatar(e.target.value)}
+              placeholder='URL de votre avatar'
             />
           </Form.Group>
 
