@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { updateGeneralSection } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
@@ -7,15 +7,15 @@ const UserGeneralModal = ({ show, setShow, updateGeneralSection, user }) => {
   const [title, setTitle] = useState(user.title || '')
   const [avatar, setAvatar] = useState(user.avatar || '')
   const [city, setCity] = useState(user.city || '')
-  const [skills, setSkills] = useState(user.skills || '')
+  const [skills, setSkills] = useState(user.skills.join(', ') || '')
   const [web, setWeb] = useState(user.web || '')
   const [bio, setBio] = useState(user.bio || '')
 
-  useEffect(() => {})
-
   const handleSubmit = e => {
     e.preventDefault()
-    updateGeneralSection({ title, city, skills, web, bio, avatar })
+    const trimed = []
+    skills.split(',').map(skill => trimed.push(skill.trim()))
+    updateGeneralSection({ title, city, skills: trimed, web, bio, avatar })
     setShow(false)
   }
 
@@ -66,6 +66,9 @@ const UserGeneralModal = ({ show, setShow, updateGeneralSection, user }) => {
               value={skills}
               onChange={e => setSkills(e.target.value)}
             />
+            <Form.Text className='text-muted'>
+              Merci de séparer chaque compétence par une virgule.
+            </Form.Text>
           </Form.Group>
           <Form.Group>
             <Form.Label>Site Web:</Form.Label>

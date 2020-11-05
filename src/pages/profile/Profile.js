@@ -114,7 +114,7 @@ const Profile = ({ match, usersReducer, setAvailableUser }) => {
                   </p>
                   <p>
                     <span className='bold'>Compétences:</span>{' '}
-                    {loadedUser.skills || 'A définir'}
+                    {loadedUser.skills.join(', ') || 'A définir'}
                   </p>
                   {loadedUser.web && (
                     <p>
