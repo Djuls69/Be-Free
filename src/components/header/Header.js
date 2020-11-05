@@ -9,7 +9,7 @@ const Header = ({ usersReducer, logoutUser, history }) => {
 
   const handleLogout = () => {
     logoutUser()
-    history.push('/')
+    history.push('/login')
   }
 
   const displayContent = () => {

@@ -5,7 +5,7 @@ export const getAllProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_ONE_PROFILE })
   try {
     const profiles = []
-    const res = await db.collection('users').get()
+    const res = await db.collection('users').where('status', '==', 'dev').get()
     res.forEach(user => profiles.push(user.data()))
     dispatch({
       type: GET_ALL_PROFILES,

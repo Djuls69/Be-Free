@@ -5,7 +5,7 @@ import { setAvailableUser } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
 import UserGeneralModal from '../../components/modals/UserGeneralModal'
 
-const Profile = ({ match, usersReducer, setAvailableUser }) => {
+const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
   const { user } = usersReducer
   const profileID = match.params.profileID
   const [isLoading, setIsLoading] = useState(true)
@@ -159,6 +159,10 @@ const Profile = ({ match, usersReducer, setAvailableUser }) => {
               </Row>
             </Card.Body>
           </Card>
+
+          <Button className='mt-4' onClick={() => history.push('/')}>
+            Retour
+          </Button>
           {show && (
             <UserGeneralModal show={show} setShow={setShow} user={loadedUser} />
           )}

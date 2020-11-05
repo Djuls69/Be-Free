@@ -9,6 +9,7 @@ import { getAllProfiles } from './redux/actions/profilesActions'
 import { connect } from 'react-redux'
 import Login from './pages/login/Login'
 import Profile from './pages/profile/Profile'
+import Home from './pages/home/Home'
 
 const App = ({ loadUser, getAllProfiles }) => {
   useEffect(() => {
@@ -22,7 +23,7 @@ const App = ({ loadUser, getAllProfiles }) => {
       <main>
         <Container>
           <Switch>
-            <Route exact path='/' component={() => <h1>Home</h1>} />
+            <Route exact path='/' component={Home} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/profile/:profileID' component={Profile} />
