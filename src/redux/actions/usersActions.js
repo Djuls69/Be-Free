@@ -1,6 +1,16 @@
 import { auth, db } from '../../firebase/firebase'
 import { CLEAR_USER, LOGIN_USER } from '../types'
 
+export const logoutUser = () => async dispatch => {
+  try {
+    await auth.signOut()
+    dispatch({ type: CLEAR_USER })
+    localStorage.removeItem('persist:befree')
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
 export const loadUser = () => dispatch => {
   try {
     auth.onAuthStateChanged(async user => {
@@ -13,7 +23,7 @@ export const loadUser = () => dispatch => {
           })
         }
       } else {
-        dispatch({ type: CLEAR_USER })
+        dispatch(logoutUser())
       }
     })
   } catch (err) {
@@ -100,17 +110,6 @@ export const updateGeneralSection = values => async (dispatch, getState) => {
       // TODO: alert
       console.log('Profile introuvable')
     }
-  } catch (err) {
-    console.log(err.message)
-  }
-}
-
-export const logoutUser = history => async dispatch => {
-  try {
-    await auth.signOut()
-    dispatch({ type: CLEAR_USER })
-    localStorage.removeItem('persist:befree')
-    history.push('/login')
   } catch (err) {
     console.log(err.message)
   }

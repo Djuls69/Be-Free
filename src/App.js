@@ -5,14 +5,16 @@ import { Container } from 'react-bootstrap'
 import Header from './components/header/Header'
 import Register from './pages/register/Register'
 import { loadUser } from './redux/actions/usersActions'
+import { getAllProfiles } from './redux/actions/profilesActions'
 import { connect } from 'react-redux'
 import Login from './pages/login/Login'
 import Profile from './pages/profile/Profile'
 
-const App = ({ loadUser }) => {
+const App = ({ loadUser, getAllProfiles }) => {
   useEffect(() => {
     loadUser()
-  }, [loadUser])
+    getAllProfiles()
+  }, [loadUser, getAllProfiles])
 
   return (
     <Router>
@@ -23,7 +25,7 @@ const App = ({ loadUser }) => {
             <Route exact path='/' component={() => <h1>Home</h1>} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/profile/:profileID' component={Profile} />
           </Switch>
         </Container>
       </main>
@@ -35,4 +37,4 @@ const mapState = state => ({
   user: state.usersReducer.user
 })
 
-export default connect(mapState, { loadUser })(App)
+export default connect(mapState, { loadUser, getAllProfiles })(App)

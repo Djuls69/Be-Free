@@ -1,2 +1,5 @@
 export const LOGIN_USER = 'LOGIN_USER'
 export const CLEAR_USER = 'CLEAR_USER'
+export const GET_ALL_PROFILES = 'GET_ALL_PROFILES'
+export const GET_ONE_PROFILE = 'GET_ONE_PROFILE'
+export const CLEAR_ONE_PROFILE = 'CLEAR_ONE_PROFILE'

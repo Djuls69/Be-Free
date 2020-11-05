@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { updateGeneralSection } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
@@ -9,6 +9,8 @@ const UserGeneralModal = ({ show, setShow, updateGeneralSection }) => {
   const [skills, setSkills] = useState('')
   const [web, setWeb] = useState('')
   const [bio, setBio] = useState('')
+
+  useEffect(() => {})
 
   const handleSubmit = e => {
     e.preventDefault()

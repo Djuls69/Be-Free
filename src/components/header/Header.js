@@ -7,6 +7,11 @@ import { connect } from 'react-redux'
 const Header = ({ usersReducer, logoutUser, history }) => {
   const { user } = usersReducer
 
+  const handleLogout = () => {
+    logoutUser()
+    history.push('/')
+  }
+
   const displayContent = () => {
     if (!user) {
       return (
@@ -25,10 +30,10 @@ const Header = ({ usersReducer, logoutUser, history }) => {
           title={`Bonjour ${user.firstName}`}
           id='basic-nav-dropdown'
         >
-          <NavDropdown.Item as={Link} to='/profile'>
+          <NavDropdown.Item as={Link} to={`/profile/${user.id}`}>
             Mon profil
           </NavDropdown.Item>
-          <NavDropdown.Item onClick={() => logoutUser(history)}>
+          <NavDropdown.Item onClick={handleLogout}>
             Se déconnecter
           </NavDropdown.Item>
         </NavDropdown>
