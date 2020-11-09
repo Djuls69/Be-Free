@@ -24,7 +24,7 @@ const validate = values => {
   return errors
 }
 
-const JobForm = ({ history, createAdvert }) => {
+const JobForm = ({ history, createAdvert, user }) => {
   const [project, setProject] = useState('personnal')
   const [profile, setProfile] = useState('frontend')
   const [isPaid, setIsPaid] = useState(false)
@@ -41,6 +41,8 @@ const JobForm = ({ history, createAdvert }) => {
       createAdvert(
         {
           id: uuidv4(),
+          user: user.id,
+          avatar: user.avatar,
           project,
           profile,
           isPaid,
@@ -205,4 +207,8 @@ const JobForm = ({ history, createAdvert }) => {
   )
 }
 
-export default connect(null, { createAdvert })(JobForm)
+const mapState = state => ({
+  user: state.usersReducer.user
+})
+
+export default connect(mapState, { createAdvert })(JobForm)

@@ -1,42 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { db } from '../../firebase/firebase'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Row, Col, Image } from 'react-bootstrap'
+import { Card, Row, Col, Image, Spinner } from 'react-bootstrap'
 import Moment from 'react-moment'
 
 const JobItem = ({ job }) => {
-  const { id, user, title, createdAt, summary } = job
-  const [creator, setCreator] = useState({ avatar: '', id: '' })
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await db.collection('users').doc(user).get()
-        if (res) {
-          setCreator({
-            avatar: res.data().avatar,
-            id: res.data().id
-          })
-        }
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
-
-    fetchUser()
-  }, [user])
+  const { id, user, avatar, title, createdAt, summary } = job
 
   return (
-    <Card>
+    <Card className='mb-4'>
       <Card.Body>
         <Row>
           <Col xs={2}>
-            <Link to={`/profile/${creator.id}`}>
-              <Image
-                style={{ width: '100%', objectFit: 'cover' }}
-                src={creator.avatar}
-                alt={creator.name}
-              />
+            <Link to={`/profile/${user}`}>
+              {!avatar ? (
+                <Spinner animation='border' variant='info' />
+              ) : (
+                <Image
+                  style={{ width: '100%', objectFit: 'cover', maxHeight: 100 }}
+                  src={avatar}
+                  alt='User avatar'
+                />
+              )}
             </Link>
           </Col>
           <Col xs={10}>
