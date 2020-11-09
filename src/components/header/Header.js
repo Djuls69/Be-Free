@@ -45,7 +45,7 @@ const Header = ({ usersReducer, logoutUser, history }) => {
     <Navbar bg='dark' variant='dark' expand='lg'>
       <Container>
         <Navbar.Brand as={Link} to='/'>
-          Be Free
+          Collides
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>

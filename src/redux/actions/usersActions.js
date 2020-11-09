@@ -31,8 +31,8 @@ export const loadUser = () => dispatch => {
   }
 }
 
-export const registerUser = (values, history) => async dispatch => {
-  const { status, companyName, firstName, lastName, email, password } = values
+export const registerUser = (values, status, history) => async dispatch => {
+  const { companyName, firstName, lastName, email, password } = values
 
   try {
     const { user } = await auth.createUserWithEmailAndPassword(email, password)

@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import { Form, Card } from 'react-bootstrap'
-import CompanyFormRegister from '../../components/companyFormRegister/CompanyFormRegister'
+import React, { useState, useEffect } from 'react'
+import { Card } from 'react-bootstrap'
 import DevFormRegister from '../../components/devFormRegister/DevFormRegister'
 
 const Register = ({ history }) => {
-  const [dev, setDev] = useState(true)
-  const [company, setCompany] = useState(false)
+  const [status, setStatus] = useState('dev')
+
+  useEffect(() => {
+    console.log(status)
+  }, [status])
 
   return (
     <Card>
@@ -14,36 +16,30 @@ const Register = ({ history }) => {
         <hr />
         <div className='mb-4'>
           <p>Vous êtes:</p>
-          <Form.Check
-            inline
-            name='status'
-            label="à la recherche d'un emploi"
-            checked={dev}
-            value={dev}
-            onChange={() => {
-              setDev(true)
-              setCompany(false)
-            }}
+          <input
             type='radio'
-          />
-          <Form.Check
-            inline
             name='status'
-            label="représentant d'une entreprise"
-            value={company}
-            onChange={() => {
-              setCompany(true)
-              setDev(false)
-            }}
-            type='radio'
+            id='dev'
+            value='dev'
+            checked={status === 'dev'}
+            onChange={() => setStatus('dev')}
           />
+          <label style={{ margin: '0 20px 0 5px' }} htmlFor='dev'>
+            Développeur Web
+          </label>
+          <input
+            type='radio'
+            name='status'
+            id='designer'
+            value='designer'
+            onChange={() => setStatus('designer')}
+          />
+          <label style={{ margin: '0 20px 0 5px' }} htmlFor='designer'>
+            Designer UI/UX
+          </label>
         </div>
 
-        {dev ? (
-          <DevFormRegister history={history} />
-        ) : (
-          <CompanyFormRegister history={history} />
-        )}
+        <DevFormRegister status={status} history={history} />
       </Card.Body>
     </Card>
   )

@@ -1,10 +1,19 @@
 import React, { useEffect } from 'react'
-import { Col, Row } from 'react-bootstrap'
-import { getAllProfiles } from '../../redux/actions/profilesActions'
+import { Col, Row, Button } from 'react-bootstrap'
+import {
+  getAllProfiles,
+  getAllDevs,
+  getAllDesigners
+} from '../../redux/actions/profilesActions'
 import { connect } from 'react-redux'
 import DevThumbnail from '../../components/dev-thumbnail/DevThumbnail'
 
-const Home = ({ allProfilesReducer, getAllProfiles }) => {
+const Home = ({
+  allProfilesReducer,
+  getAllProfiles,
+  getAllDevs,
+  getAllDesigners
+}) => {
   const { loading, profiles } = allProfilesReducer
 
   useEffect(() => {
@@ -13,8 +22,19 @@ const Home = ({ allProfilesReducer, getAllProfiles }) => {
 
   return (
     <section>
-      <h1>Liste de nos brillants développeurs</h1>
+      <h1>Liste de nos membres</h1>
       <hr />
+
+      <span className='mr-2'>Filtrer par:</span>
+      <Button variant='secondary' onClick={getAllProfiles} className='mr-4'>
+        Tous les utilisateurs
+      </Button>
+      <Button variant='secondary' onClick={getAllDevs} className='mr-4'>
+        Développeurs
+      </Button>
+      <Button variant='secondary' onClick={getAllDesigners} className='mr-4'>
+        Designers
+      </Button>
 
       {loading ? (
         <h4>Loading...</h4>
@@ -35,4 +55,8 @@ const mapState = state => ({
   allProfilesReducer: state.allProfilesReducer
 })
 
-export default connect(mapState, { getAllProfiles })(Home)
+export default connect(mapState, {
+  getAllProfiles,
+  getAllDevs,
+  getAllDesigners
+})(Home)
