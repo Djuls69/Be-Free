@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap'
 import { fetchAdverts } from '../../redux/actions/advertsActions'
 import { connect } from 'react-redux'
 import JobItem from '../../components/job-item/JobItem'
-import { jobs } from '../../data/jobs'
 
 const Board = ({ history, user, advertsReducer, fetchAdverts }) => {
   if (!user) {
@@ -29,10 +28,6 @@ const Board = ({ history, user, advertsReducer, fetchAdverts }) => {
       ) : (
         adverts.map(job => <JobItem key={job.id} job={job} />)
       )}
-
-      {jobs.map(job => (
-        <JobItem key={job.id} job={job} />
-      ))}
     </section>
   )
 }

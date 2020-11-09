@@ -4,6 +4,7 @@ import { Card, Row, Col, Image, Form, Button } from 'react-bootstrap'
 import { setAvailableUser } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
 import UserGeneralModal from '../../components/modals/UserGeneralModal'
+import MessageModal from '../../components/modals/MessageModal'
 
 const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
   const { user } = usersReducer
@@ -11,8 +12,9 @@ const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isAvailable, setIsAvailable] = useState(false)
   const [loadedUser, setLoadedUser] = useState({})
-  const [show, setShow] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
+  const [show, setShow] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +109,16 @@ const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
                       </Form.Text>
                     )}
                   </Form.Group>
+
+                  {!isOwner && (
+                    <Button
+                      variant='outline-primary'
+                      onClick={() => setShowMessage(true)}
+                    >
+                      <i className='mr-2 far fa-paper-plane'></i> Envoyer un
+                      message
+                    </Button>
+                  )}
                 </Col>
 
                 <Col xs={12} md={8}>
@@ -128,7 +140,15 @@ const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
                     </p>
                     {loadedUser.web && (
                       <p>
-                        <span className='bold'>Site Web:</span> {loadedUser.web}
+                        <span className='bold'>Site Web:</span>{' '}
+                        <a
+                          style={{ color: '#1f9bcf' }}
+                          href={loadedUser.web}
+                          target='_blank'
+                          rel='noreferrer'
+                        >
+                          {loadedUser.web}
+                        </a>
                       </p>
                     )}
                     {loadedUser.bio && (
@@ -163,8 +183,16 @@ const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
           <Button className='mt-4' onClick={() => history.goBack()}>
             Retour
           </Button>
+
           {show && (
             <UserGeneralModal show={show} setShow={setShow} user={loadedUser} />
+          )}
+          {showMessage && (
+            <MessageModal
+              show={true}
+              setShowMessage={setShowMessage}
+              user={loadedUser}
+            />
           )}
         </Fragment>
       )}

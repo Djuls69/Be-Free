@@ -4,7 +4,7 @@ import { Card, Row, Col, Image, Spinner } from 'react-bootstrap'
 import Moment from 'react-moment'
 
 const JobItem = ({ job }) => {
-  const { id, user, avatar, title, createdAt, summary } = job
+  const { id, user, avatar, title, createdAt, summary, project } = job
 
   return (
     <Card className='mb-4'>
@@ -24,7 +24,10 @@ const JobItem = ({ job }) => {
             </Link>
           </Col>
           <Col xs={10}>
-            <Card.Title>{title}</Card.Title>
+            <Card.Title>
+              {title} - Projet{' '}
+              {project === 'personnal' ? 'Personnel' : 'Professionnel'}
+            </Card.Title>
             <Card.Subtitle className='mb-2 text-muted'>
               Créé le: <Moment format='DD/MM/YYYY'>{createdAt}</Moment>
             </Card.Subtitle>

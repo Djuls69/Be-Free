@@ -203,6 +203,14 @@ const JobForm = ({ history, createAdvert, user }) => {
       <Button className='mr-4' variant='primary' type='submit'>
         Envoyer
       </Button>
+      <Button
+        onClick={() => history.push('/board')}
+        className='mr-4'
+        variant='secondary'
+        type='button'
+      >
+        Retour
+      </Button>
     </Form>
   )
 }

@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Container, Nav, Navbar, NavDropdown, Badge } from 'react-bootstrap'
 import { logoutUser } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
 
-const Header = ({ usersReducer, logoutUser, history }) => {
+const Header = ({ usersReducer, messagesReducer, logoutUser, history }) => {
   const { user } = usersReducer
+  const { unreadMessages } = messagesReducer
 
   const handleLogout = () => {
     logoutUser()
@@ -33,6 +34,12 @@ const Header = ({ usersReducer, logoutUser, history }) => {
           <NavDropdown title={`${user.firstName}`} id='basic-nav-dropdown'>
             <NavDropdown.Item as={Link} to={`/profile/${user.id}`}>
               Mon profil
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              Mes Messages{' '}
+              {unreadMessages.length === 0 && (
+                <Badge variant='danger'>{unreadMessages.length}</Badge>
+              )}
             </NavDropdown.Item>
             <NavDropdown.Item onClick={handleLogout}>
               Se déconnecter
@@ -62,7 +69,8 @@ const Header = ({ usersReducer, logoutUser, history }) => {
 }
 
 const mapState = state => ({
-  usersReducer: state.usersReducer
+  usersReducer: state.usersReducer,
+  messagesReducer: state.messagesReducer
 })
 
 export default withRouter(connect(mapState, { logoutUser })(Header))

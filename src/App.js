@@ -6,6 +6,7 @@ import Header from './components/header/Header'
 import Register from './pages/register/Register'
 import { loadUser } from './redux/actions/usersActions'
 import { getAllProfiles } from './redux/actions/profilesActions'
+import { fetchUnreadMessages } from './redux/actions/messagesActions'
 import { connect } from 'react-redux'
 import Login from './pages/login/Login'
 import Profile from './pages/profile/Profile'
@@ -13,11 +14,12 @@ import Home from './pages/home/Home'
 import Board from './pages/board/Board'
 import JobForm from './pages/job-form/JobForm'
 
-const App = ({ loadUser, getAllProfiles }) => {
+const App = ({ loadUser, getAllProfiles, fetchUnreadMessages }) => {
   useEffect(() => {
     loadUser()
     getAllProfiles()
-  }, [loadUser, getAllProfiles])
+    fetchUnreadMessages()
+  }, [loadUser, getAllProfiles, fetchUnreadMessages])
 
   return (
     <Router>
@@ -42,4 +44,8 @@ const mapState = state => ({
   user: state.usersReducer.user
 })
 
-export default connect(mapState, { loadUser, getAllProfiles })(App)
+export default connect(mapState, {
+  loadUser,
+  getAllProfiles,
+  fetchUnreadMessages
+})(App)
