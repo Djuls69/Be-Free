@@ -160,7 +160,7 @@ const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
             </Card.Body>
           </Card>
 
-          <Button className='mt-4' onClick={() => history.push('/')}>
+          <Button className='mt-4' onClick={() => history.goBack()}>
             Retour
           </Button>
           {show && (

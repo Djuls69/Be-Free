@@ -26,17 +26,19 @@ const Header = ({ usersReducer, logoutUser, history }) => {
       )
     } else {
       return (
-        <NavDropdown
-          title={`Bonjour ${user.firstName}`}
-          id='basic-nav-dropdown'
-        >
-          <NavDropdown.Item as={Link} to={`/profile/${user.id}`}>
-            Mon profil
-          </NavDropdown.Item>
-          <NavDropdown.Item onClick={handleLogout}>
-            Se déconnecter
-          </NavDropdown.Item>
-        </NavDropdown>
+        <Fragment>
+          <Nav.Link as={Link} to='/board'>
+            Board
+          </Nav.Link>
+          <NavDropdown title={`${user.firstName}`} id='basic-nav-dropdown'>
+            <NavDropdown.Item as={Link} to={`/profile/${user.id}`}>
+              Mon profil
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout}>
+              Se déconnecter
+            </NavDropdown.Item>
+          </NavDropdown>
+        </Fragment>
       )
     }
   }
@@ -44,12 +46,15 @@ const Header = ({ usersReducer, logoutUser, history }) => {
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
       <Container>
-        <Navbar.Brand as={Link} to='/'>
-          Collides
-        </Navbar.Brand>
+        <Navbar.Brand>Collides</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='ml-auto'>{displayContent()}</Nav>
+          <Nav className='ml-auto'>
+            <Nav.Link as={Link} to='/'>
+              Membres
+            </Nav.Link>
+            {displayContent()}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
