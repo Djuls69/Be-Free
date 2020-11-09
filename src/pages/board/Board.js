@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import JobItem from '../../components/job-item/JobItem'
@@ -13,7 +14,9 @@ const Board = ({ history, usersReducer: { user } }) => {
     <section>
       <h1>Liste des demandes</h1>
       <hr />
-      <Button className='mb-4'>Créer une demande de collaboration</Button>
+      <Button as={Link} to='/job-form' className='mb-4'>
+        Créer une demande de collaboration
+      </Button>
 
       {jobs.map(job => (
         <JobItem key={job.id} job={job} />

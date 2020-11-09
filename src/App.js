@@ -11,6 +11,7 @@ import Login from './pages/login/Login'
 import Profile from './pages/profile/Profile'
 import Home from './pages/home/Home'
 import Board from './pages/board/Board'
+import JobForm from './pages/job-form/JobForm'
 
 const App = ({ loadUser, getAllProfiles }) => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const App = ({ loadUser, getAllProfiles }) => {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/board' component={Board} />
+            <Route exact path='/job-form' component={JobForm} />
             <Route exact path='/profile/:profileID' component={Profile} />
           </Switch>
         </Container>
