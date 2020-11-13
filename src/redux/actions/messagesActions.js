@@ -10,7 +10,10 @@ export const fetchAllMessages = () => async (dispatch, getState) => {
   const messages = []
 
   try {
-    const res = await db.collection('messages').get()
+    const res = await db
+      .collection('messages')
+      .orderBy('createdAt', 'desc')
+      .get()
     res.forEach(doc => {
       user.conversations.find(
         conv => conv === doc.id && messages.push(doc.data())
@@ -60,6 +63,14 @@ export const createMessage = (formData, target) => async (
       await db.collection('users').doc(target).update({ conversations })
     }
     await dispatch(loadUser())
+  } catch (err) {
+    console.log(err.message)
+  }
+}
+
+export const setMessageRead = id => async dispatch => {
+  try {
+    await db.collection('messages').doc(id).update({ read: true })
   } catch (err) {
     console.log(err.message)
   }

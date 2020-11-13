@@ -13,6 +13,7 @@ import Home from './pages/home/Home'
 import Board from './pages/board/Board'
 import JobForm from './pages/job-form/JobForm'
 import Messages from './pages/messages/Messages'
+import Message from './pages/message/Message'
 
 const App = ({ loadUser, getAllProfiles }) => {
   useEffect(() => {
@@ -33,6 +34,7 @@ const App = ({ loadUser, getAllProfiles }) => {
             <Route exact path='/messages' component={Messages} />
             <Route exact path='/job-form' component={JobForm} />
             <Route exact path='/profile/:profileID' component={Profile} />
+            <Route exact path='/message/:messageID' component={Message} />
           </Switch>
         </Container>
       </main>
