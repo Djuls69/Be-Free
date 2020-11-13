@@ -1,10 +1,12 @@
 import { auth, db } from '../../firebase/firebase'
-import { CLEAR_USER, LOGIN_USER } from '../types'
+import { CLEAR_MESSAGES, CLEAR_USER, LOAD_USER } from '../types'
+import { fetchAllMessages } from './messagesActions'
 
 export const logoutUser = () => async dispatch => {
   try {
     await auth.signOut()
     dispatch({ type: CLEAR_USER })
+    dispatch({ type: CLEAR_MESSAGES })
     localStorage.removeItem('persist:befree')
   } catch (err) {
     console.log(err.message)
@@ -18,9 +20,10 @@ export const loadUser = () => dispatch => {
         const res = await db.collection('users').doc(user.uid).get()
         if (res.exists) {
           dispatch({
-            type: LOGIN_USER,
+            type: LOAD_USER,
             payload: res.data()
           })
+          await dispatch(fetchAllMessages())
         }
       } else {
         dispatch(logoutUser())
@@ -43,13 +46,14 @@ export const registerUser = (values, status, history) => async dispatch => {
       firstName,
       lastName,
       email,
-      available: false
+      available: false,
+      conversations: []
     }
 
     await db.collection('users').doc(user.uid).set(newUser)
 
     dispatch({
-      type: LOGIN_USER,
+      type: LOAD_USER,
       payload: newUser
     })
     history.push('/')

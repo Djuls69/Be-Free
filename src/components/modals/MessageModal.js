@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
+import { createMessage } from '../../redux/actions/messagesActions'
 import { connect } from 'react-redux'
 
-const MessageModal = ({ setShowMessage, user }) => {
+const MessageModal = ({ setShowMessage, target, createMessage }) => {
   const [subject, setSubject] = useState('')
   const [body, setBody] = useState('')
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
+    await createMessage({ subject, body }, target)
+    setShowMessage(false)
   }
 
   return (
@@ -59,4 +62,4 @@ const MessageModal = ({ setShowMessage, user }) => {
   )
 }
 
-export default connect(null, {})(MessageModal)
+export default connect(null, { createMessage })(MessageModal)

@@ -190,6 +190,7 @@ const Profile = ({ history, match, usersReducer, setAvailableUser }) => {
           {showMessage && (
             <MessageModal
               show={true}
+              target={profileID}
               setShowMessage={setShowMessage}
               user={loadedUser}
             />

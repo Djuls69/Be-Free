@@ -6,20 +6,19 @@ import Header from './components/header/Header'
 import Register from './pages/register/Register'
 import { loadUser } from './redux/actions/usersActions'
 import { getAllProfiles } from './redux/actions/profilesActions'
-import { fetchUnreadMessages } from './redux/actions/messagesActions'
 import { connect } from 'react-redux'
 import Login from './pages/login/Login'
 import Profile from './pages/profile/Profile'
 import Home from './pages/home/Home'
 import Board from './pages/board/Board'
 import JobForm from './pages/job-form/JobForm'
+import Messages from './pages/messages/Messages'
 
-const App = ({ loadUser, getAllProfiles, fetchUnreadMessages }) => {
+const App = ({ loadUser, getAllProfiles }) => {
   useEffect(() => {
     loadUser()
     getAllProfiles()
-    fetchUnreadMessages()
-  }, [loadUser, getAllProfiles, fetchUnreadMessages])
+  }, [loadUser, getAllProfiles])
 
   return (
     <Router>
@@ -31,6 +30,7 @@ const App = ({ loadUser, getAllProfiles, fetchUnreadMessages }) => {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/board' component={Board} />
+            <Route exact path='/messages' component={Messages} />
             <Route exact path='/job-form' component={JobForm} />
             <Route exact path='/profile/:profileID' component={Profile} />
           </Switch>
@@ -46,6 +46,5 @@ const mapState = state => ({
 
 export default connect(mapState, {
   loadUser,
-  getAllProfiles,
-  fetchUnreadMessages
+  getAllProfiles
 })(App)

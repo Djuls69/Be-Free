@@ -1,9 +1,8 @@
-import { FETCH_MESSAGES, FETCH_UNREAD_MESSAGES } from '../types'
+import { CLEAR_MESSAGES, FETCH_MESSAGES } from '../types'
 
 const init_state = {
   loading: true,
-  messages: [],
-  unreadMessages: []
+  messages: null
 }
 
 export const messagesReducer = (state = init_state, action) => {
@@ -11,8 +10,8 @@ export const messagesReducer = (state = init_state, action) => {
   switch (type) {
     case FETCH_MESSAGES:
       return { loading: false, messages: payload }
-    case FETCH_UNREAD_MESSAGES:
-      return { ...state, unreadMessages: payload }
+    case CLEAR_MESSAGES:
+      return { loading: false, messages: null }
     default:
       return state
   }

@@ -1,12 +1,26 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Container, Nav, Navbar, NavDropdown, Badge } from 'react-bootstrap'
+import { Badge, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { logoutUser } from '../../redux/actions/usersActions'
 import { connect } from 'react-redux'
 
 const Header = ({ usersReducer, messagesReducer, logoutUser, history }) => {
   const { user } = usersReducer
-  const { unreadMessages } = messagesReducer
+  const { messages } = messagesReducer
+
+  const [unReadMessages, setUnReadMessages] = useState(0)
+
+  useEffect(() => {
+    if (messages && user) {
+      setUnReadMessages(0)
+      const receivedMessages = messages.filter(
+        mess => mess.to === user.id && mess.read === false
+      )
+      setUnReadMessages(receivedMessages.length)
+    } else {
+      setUnReadMessages(0)
+    }
+  }, [messages, user])
 
   const handleLogout = () => {
     logoutUser()
@@ -35,10 +49,10 @@ const Header = ({ usersReducer, messagesReducer, logoutUser, history }) => {
             <NavDropdown.Item as={Link} to={`/profile/${user.id}`}>
               Mon profil
             </NavDropdown.Item>
-            <NavDropdown.Item>
+            <NavDropdown.Item as={Link} to='/messages'>
               Mes Messages{' '}
-              {unreadMessages.length === 0 && (
-                <Badge variant='danger'>{unreadMessages.length}</Badge>
+              {unReadMessages > 0 && (
+                <Badge variant='danger'>{unReadMessages}</Badge>
               )}
             </NavDropdown.Item>
             <NavDropdown.Item onClick={handleLogout}>
@@ -53,7 +67,9 @@ const Header = ({ usersReducer, messagesReducer, logoutUser, history }) => {
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
       <Container>
-        <Navbar.Brand>Collides</Navbar.Brand>
+        <Navbar.Brand as={Link} to='/'>
+          Collides
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='ml-auto'>
